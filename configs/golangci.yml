@@ -1,0 +1,56 @@
+# Shared golangci-lint config for Rapid Networks Go repos.
+#
+# Copy this file to the root of your repo as `.golangci.yml`.
+# golangci-lint can't extend a remote config, so each repo keeps its own copy.
+# Put repo-specific changes at the bottom of `exclusions.rules` and keep the
+# rest in sync with this master copy.
+#
+# Docs: https://golangci-lint.run/docs/configuration/file/
+
+version: "2"
+
+linters:
+  # errcheck, govet, ineffassign, staticcheck, unused
+  default: standard
+
+  enable:
+    - bodyclose # HTTP response bodies are closed
+    - errorlint # errors.Is/As and %w wrapping used correctly
+    - gosec # common security issues
+    - misspell # spelling mistakes in comments and strings
+    - nolintlint # //nolint directives are specific and explained
+    - revive # style and naming (golint successor)
+
+  settings:
+    errcheck:
+      # Flag unchecked type assertions like `v := x.(T)`.
+      check-type-assertions: true
+
+    nolintlint:
+      # Every //nolint needs a reason and a named linter.
+      require-explanation: true
+      require-specific: true
+
+  exclusions:
+    generated: lax
+    presets:
+      - comments # don't require doc comments on every exported name
+      - std-error-handling # e.g. unchecked Close() / fmt.Fprint errors
+      - common-false-positives
+    rules:
+      # Tests often use fixed values and ignore errors on purpose.
+      - path: _test\.go
+        linters:
+          - errcheck
+          - gosec
+
+formatters:
+  enable:
+    - gofumpt # stricter gofmt
+    - goimports # import grouping
+
+  settings:
+    goimports:
+      # Group our own packages after third-party imports.
+      local-prefixes:
+        - github.com/Rapid-Networks
