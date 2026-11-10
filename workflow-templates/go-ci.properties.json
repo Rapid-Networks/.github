@@ -1,0 +1,6 @@
+{
+  "name": "Rapid Networks Go CI",
+  "description": "Vet, test (with the race detector) and lint a Go module, using the Go version from go.mod.",
+  "categories": ["Go"],
+  "filePatterns": ["go.mod$"]
+}
