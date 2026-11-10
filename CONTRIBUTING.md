@@ -28,7 +28,7 @@ Write short, imperative commit messages ("Add retry to Splynx client").
 ## Licensing
 
 By contributing, you agree that your contributions are licensed under the
-license of the repo you're contributing to.
+licence of the repo you're contributing to.
 
 ## Questions
 
